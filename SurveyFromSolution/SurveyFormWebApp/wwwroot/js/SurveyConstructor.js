@@ -1,25 +1,36 @@
-﻿let table;
+﻿let fieldTable;
 
 $(document).ready(function () {
     getTable();
 })
 
 function getTable() {
-    table = $("#fieldsTable").DataTable({
+    fieldTable = $("#fieldsTable").DataTable({
         "ajax": {
-            "url": "Survey/GetAllFieldInputs",
+            "url": "/Survey/GetAllFieldInputs",
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { "data": "name", "width": "25%" },
-            { "data": "surveyDescription", "width": "35%" },
+            { "data": "name", "width": "15%" },
+            { "data": "title", "width": "15%" },
             {
-                "data": "id", "render": function (data) {
-                    return `<div class="text-center">
-                        <a class="btn btn-primary" href="/Survey/Upsert?id=${data}" style="cursor:pointer"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" onclick=Delete("/Survey/Delete/${data}")  style="cursor:pointer")><i class="fas fa-trash-alt"></i></a>
-                </div>`;
+                "data": "isRequired", "render": function (data) {
+                    return (data?"Requerido":"No requerido")
+                }
+            },
+            {
+                "data": "dataType", "render": function (data) {
+                    switch (data) {
+                        case "1":
+                            return "Texto";
+                        case "2":
+                            return "Numerico";
+                        case "3":
+                            return "Fecha"
+                        default:
+                            return "Sin tipo";
+                    }
                 }
             }
         ],
@@ -33,5 +44,38 @@ function getTable() {
 
 
 $("#add-row").click(function () {
-    console.log("btn presionado");
+    var form = $("#fieldForm");
+    form.validate();
+    $.validator.messages.required = 'Este campo no puede estar vacio!';
+    if (form.valid()) {
+        let objForm = form.serializeArray();
+        let objRequest ={}
+        objForm.forEach((x) => {
+            if (x.name == "Id" && x.value == '') {
+                x.value = 0;
+            }
+            if (x.name == "isRequired") {
+                x.value = true;
+            }
+            objRequest[x.name] = x.value;
+        })
+
+        sendAjax(objRequest);
+    } 
 })
+
+function sendAjax(obj) {
+    $.ajax({
+        url: "/Survey/CollectField",
+        type: "POST",
+        dataType: "json",
+        data: {
+            field: JSON.stringify(obj)
+        },
+        success: function (data) {
+            if (data.success) {
+                fieldTable.ajax.reload();
+            }
+        }
+    })
+}

@@ -36,6 +36,15 @@ namespace SurveyFormWebApp
             //unit of work pattern
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //setting up session on this project
+
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromMinutes(30);
+                opt.Cookie.HttpOnly = true;
+                opt.Cookie.IsEssential = true;
+            });
             
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
@@ -57,7 +66,7 @@ namespace SurveyFormWebApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

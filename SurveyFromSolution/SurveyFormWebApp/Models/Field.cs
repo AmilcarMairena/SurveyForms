@@ -13,7 +13,7 @@ namespace SurveyFormWebApp.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public string Tittle { get; set; }
+        public string Title { get; set; }
         public bool IsRequired { get; set; }
         public int DataType { get; set; }
         [Required]
