@@ -24,10 +24,9 @@ namespace SurveyFormWebApp.Migrations
                 name: "Field",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Tittle = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: false),
                     IsRequired = table.Column<bool>(nullable: false),
                     DataType = table.Column<int>(nullable: false),
                     SurveyId = table.Column<Guid>(nullable: false)

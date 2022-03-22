@@ -64,21 +64,54 @@ namespace SurveyFormWebApp.Controllers
             this.unit.Save();
             return Json(new { success = true });
         }
+        [HttpGet]
+        public IActionResult GetField(string id)
+        {
+            var getObj = HttpContext.Session.GetObject<List<Field>>(SD.FieldList).Where(x => x.Id == Guid.Parse(id)).FirstOrDefault();
+
+            if(getObj == null)
+            {
+                return Json(new { success = false });
+            }
+            return Json(new { success = true, data = getObj });
+        }
         [HttpPost]
         public IActionResult CollectField(string field)
         {
             Field fieldOut = JsonConvert.DeserializeObject<Field>(field);
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(SD.FieldList)))
             {
+                fieldOut.Id = Guid.NewGuid();
                 List<Field> NewList = new List<Field>() { fieldOut };
                 HttpContext.Session.SetObject(SD.FieldList, NewList);
 
                 return Json(new { success = true });
             }
             var getList = HttpContext.Session.GetObject<List<Field>>(SD.FieldList);
-            getList.Add(fieldOut);
-            HttpContext.Session.SetObject(SD.FieldList, getList);
+            if (fieldOut.Id == null)
+            {
+                fieldOut.Id = Guid.NewGuid();
+               
+                getList.Add(fieldOut);
+                HttpContext.Session.SetObject(SD.FieldList, getList);
+            }
+            else
+            {
+                getList = getList.Where(x => x.Id != fieldOut.Id).ToList();
 
+                getList.Add(fieldOut);
+                HttpContext.Session.SetObject(SD.FieldList, getList);
+            }
+            
+
+            return Json(new { success = true });
+        }
+        [HttpDelete]
+        public IActionResult DeleteField(string id)
+        {
+            var objList = HttpContext.Session.GetObject<List<Field>>(SD.FieldList);
+            objList = objList.Where(x => x.Id != Guid.Parse(id)).ToList();
+            HttpContext.Session.SetObject(SD.FieldList, objList);
             return Json(new { success = true });
         }
 

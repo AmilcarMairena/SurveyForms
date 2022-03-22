@@ -10,7 +10,7 @@ using SurveyFormWebApp.Data;
 namespace SurveyFormWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220322182107_addingWorkModelsToDB")]
+    [Migration("20220322222742_addingWorkModelsToDB")]
     partial class addingWorkModelsToDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,10 +23,9 @@ namespace SurveyFormWebApp.Migrations
 
             modelBuilder.Entity("SurveyFormWebApp.Models.Field", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("DataType")
                         .HasColumnType("int");
@@ -41,7 +40,7 @@ namespace SurveyFormWebApp.Migrations
                     b.Property<Guid>("SurveyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Tittle")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

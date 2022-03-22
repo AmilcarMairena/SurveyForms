@@ -21,10 +21,9 @@ namespace SurveyFormWebApp.Migrations
 
             modelBuilder.Entity("SurveyFormWebApp.Models.Field", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("DataType")
                         .HasColumnType("int");
@@ -39,7 +38,7 @@ namespace SurveyFormWebApp.Migrations
                     b.Property<Guid>("SurveyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Tittle")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
