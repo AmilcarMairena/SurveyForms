@@ -1,0 +1,28 @@
+﻿<div class="container my-3">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group d-flex justify-content-around">
+                <h1>Encuestas</h1>
+                <a class="btn btn-primary align-self-center" asp-action="Upsert">Agregar encuesta</a>
+            </div>
+            
+            <hr />
+        </div>
+        <div class="col-lg-12">
+            <table width="100%" class="table table-hover" id="SurveyTable">
+                <thead>
+                    <tr>
+                        <th>Nombre de la encuesta</th>
+                        <th>Descripción</th>
+                        @*<th>Link de encuesta</th>*@
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script src="~/js/Survey.js"></script>
+}
