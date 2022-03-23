@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SurveyFormWebApp.Repository.IRepository
 {
-    public interface IResultRepository : IRepository<Result>
+    public interface IValueResultRepository : IRepository<ValueResult>
     {
-        void Update(Result obj);
+        void Update(ValueResult obj);
     }
 }

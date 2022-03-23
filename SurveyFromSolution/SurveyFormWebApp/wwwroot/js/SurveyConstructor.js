@@ -127,3 +127,12 @@ function deleteField(url) {
         }
     })
 }
+
+
+function validateFields() {
+    if (fieldTable.rows().count() == 0) {
+        
+        return false;
+    }
+    return true;
+} 

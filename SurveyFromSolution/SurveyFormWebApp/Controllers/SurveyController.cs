@@ -41,14 +41,60 @@ namespace SurveyFormWebApp.Controllers
                 return View(surveyForm);
             }
 
+            surveyForm.SurveyObj = this.unit.survey.GetFirst(x => x.Id == Guid.Parse(id));
             return View(surveyForm);
+        }
+        [HttpGet]
+        public IActionResult LinkToSurvey(string returnUrl)
+        {
+            ViewBag.url = returnUrl;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GenerateLink()
+        {
+
+          
+
+            if (!ModelState.IsValid) return View(surveyForm);
+            if(surveyForm.SurveyObj.Id == Guid.Empty)
+            {
+                // creating the form
+
+                this.unit.survey.Add(surveyForm.SurveyObj);
+                this.unit.Save();
+
+                //retrieving the list of field from the session context
+
+                surveyForm.FieldList = new List<Field>();
+
+                surveyForm.FieldList = HttpContext.Session.GetObject<List<Field>>(SD.FieldList);
+
+                surveyForm.FieldList.ForEach(x => x.SurveyId = surveyForm.SurveyObj.Id);
+
+                this.unit.Field.Add(surveyForm.FieldList);
+
+
+            }
+            else
+            {
+                //updating the form
+            }
+
+            this.unit.Save();
+            var callbackUrl = Url.Action("GetSurveyForm", "Home", new { id = surveyForm.SurveyObj.Id });
+            return RedirectToAction(nameof(LinkToSurvey), new { returnUrl = callbackUrl });
         }
 
         #region  API CALLS
         [HttpGet]
         public IActionResult GetAllSurveyForms()
         {
-            return Json(new { data = this.unit.survey.GetAll().ToList() });
+            var obj = (from survey in this.unit.survey.GetAll().ToList()
+                       select new { survey, url = Url.Action("GetSurveyForm", "Home", new { id = survey.Id }) }
+                       );
+            return Json(new { data =  obj });
         }
 
         [HttpDelete]

@@ -16,10 +16,19 @@ namespace SurveyFormWebApp.Repository
             this.db = db;
             survey = new SurveyRepository(db);
             Field = new FieldRepository(db);
+            Result = new ResultRepository(db);
+            SurveyResult = new SurveyResultRepository(db);
+            ValueResult = new ValueResultRepository(db);
         }
         public ISurveyRepository survey {get;private set;}
 
         public IFieldRepository Field { get; private set; }
+
+        public IResultRepository Result { get; private set; }
+
+        public ISurverResultRepository SurveyResult { get; private set; }
+
+        public IValueResultRepository ValueResult { get; private set; }
 
         public void Dispose()
         {

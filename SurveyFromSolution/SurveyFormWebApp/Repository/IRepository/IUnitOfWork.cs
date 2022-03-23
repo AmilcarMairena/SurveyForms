@@ -9,6 +9,9 @@ namespace SurveyFormWebApp.Repository.IRepository
     {
         ISurveyRepository survey { get; }
         IFieldRepository Field { get; }
+        IResultRepository Result { get; }
+        ISurverResultRepository SurveyResult { get; }
+        IValueResultRepository ValueResult { get; }
         void Save();
     }
 }

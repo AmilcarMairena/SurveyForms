@@ -15,5 +15,8 @@ namespace SurveyFormWebApp.Data
         }
         public DbSet<Survey> Survey { get; set; }
         public DbSet<Field> Field { get; set; }
+        public DbSet<SurveyResult> SurveyResult { get; set; }
+        public DbSet<Result> Result { get; set; }
+        public DbSet<ValueResult> ValueResult { get; set; }
     }
 }

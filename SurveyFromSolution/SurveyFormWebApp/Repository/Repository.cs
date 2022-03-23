@@ -52,7 +52,7 @@ namespace SurveyFormWebApp.Repository
             return query;
         }
 
-        public T GetFirst(Expression<Func<T, bool>> filter = null, bool isTracking = true)
+        public T GetFirst(Expression<Func<T, bool>> filter = null, bool isTracking = true, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
             IQueryable<T> query = this.dbSet;
 
@@ -60,6 +60,10 @@ namespace SurveyFormWebApp.Repository
             if (filter != null)
             {
                 query = query.Where(filter);
+            }
+            if(include != null)
+            {
+                query = include(query);
             }
            
             if (!isTracking)

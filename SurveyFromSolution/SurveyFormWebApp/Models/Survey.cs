@@ -11,7 +11,7 @@ namespace SurveyFormWebApp.Models
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [StringLength(15, ErrorMessage = "El titulo: {0} debe tener al menos {2} y un maximo de {1}", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "El titulo: {0} debe tener al menos {2} y un maximo de {1}", MinimumLength = 6)]
         public string Name { get; set; }
         public string SurveyDescription { get; set; }
         public IEnumerable<Field> FieldList { get; set; }

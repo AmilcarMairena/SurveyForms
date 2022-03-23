@@ -14,13 +14,20 @@ function loadTable() {
             "datatype":"json"
         },
         "columns": [
-            { "data": "name", "width": "25%" },
-            { "data": "surveyDescription", "width": "35%" },
+            { "data": "survey.name", "width": "25%" },
+            { "data": "survey.surveyDescription", "width": "35%" },
             {
-                "data": "id", "render": function (data) {
+                "data": "url", "render": function (data) {
                     return `<div class="text-center">
-                        <a class="btn btn-primary" href="/Survey/Upsert?id=${data}" style="cursor:pointer"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" onclick=Delete("/Survey/Delete/${data}")  style="cursor:pointer")><i class="fas fa-trash-alt"></i></a>
+                        <a class="btn btn-primary" href=${data} style="cursor:pointer">Formulario</a>
+                    </div >`
+                }
+            },
+            {
+                "data": "survey.id", "render": function (data) {
+                    return `<div class="text-center">
+                        <a class="btn btn-primary" href="/Survey/Upsert?id=${data}" style="cursor:pointer">Edit</a>
+                        <a class="btn btn-danger" onclick=Delete("/Survey/Delete/${data}")  style="cursor:pointer")>Del</a>
                 </div>`;
                 }}
         ],

@@ -16,7 +16,7 @@ namespace SurveyFormWebApp.Repository.IRepository
             bool isTracking = true
             );
 
-        T GetFirst(Expression<Func<T, bool>> filter = null, bool isTracking = true);
+        T GetFirst(Expression<Func<T, bool>> filter = null, bool isTracking = true, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null);
 
         void Add(T entity);
         void Add(IEnumerable<T> entity);

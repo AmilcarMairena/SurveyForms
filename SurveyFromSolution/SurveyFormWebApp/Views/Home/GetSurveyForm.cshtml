@@ -1,0 +1,50 @@
+﻿@model SurveyFormWebApp.Models.ViewModels.SurveyResultViewModel
+
+<main id="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                 
+                    <h2>@Model.survey.Name</h2>
+                    <p>@Model.survey.SurveyDescription</p>
+                    <hr />
+
+                </div>
+                <div class="card-body">
+                    <form id="SurveyBody" method="post" asp-action="CollectSurveyForm" asp-controller="Home">
+                        <input hidden asp-for="survey.Id" />
+                        @foreach (var item in Model.survey.FieldList)
+                        {
+                            <div class="form-group">
+                                <label>@item.Title @(item.IsRequired?"*(Campo obligatorio)":"")</label>
+                                @switch (item.DataType)
+                                {
+                                    case 0:
+                                        <input type="text" class="form-control" name="@item.Id" @(item.IsRequired ? "required" : "") />
+                                        break;
+                                    case 1:
+                                        <input type="number" class="form-control" name="@item.Id" @(item.IsRequired ? "required" : "") />
+                                        break;
+                                    case 2:
+                                        <input type="datetime" class="form-control" name="@item.Id" @(item.IsRequired ? "required" : "") />
+                                        break;
+                                    default:
+                                        <input type="text" class="form-control" name="@item.Id" @(item.IsRequired ? "required" : "") />
+                                        break;
+                                }
+                            </div>
+                        }
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary" onclick="checkBeforeSend()">Enviar formulario</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts{ 
+    <script src="~/js/SurveyForm.js"></script>
+}
