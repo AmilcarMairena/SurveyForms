@@ -15,7 +15,7 @@ namespace SurveyFormWebApp.Models
         public Guid SurveyId { get; set; }
         [ForeignKey("SurveyId")]
         public Survey Survey { get; set; }
-        IEnumerable<SurveyResult> SurveyResults { get; set; }
+        public SurveyResult SurveyResults { get; set; }
 
         public DateTime ResultDate { get; set; }
     }

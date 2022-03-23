@@ -27,7 +27,7 @@
                                         <input type="number" class="form-control" name="@item.Id" @(item.IsRequired ? "required" : "") />
                                         break;
                                     case 2:
-                                        <input type="datetime" class="form-control" name="@item.Id" @(item.IsRequired ? "required" : "") />
+                                        <input  type="datetime-local"  class="form-control" name="@item.Id" @(item.IsRequired ? "required" : "") />
                                         break;
                                     default:
                                         <input type="text" class="form-control" name="@item.Id" @(item.IsRequired ? "required" : "") />

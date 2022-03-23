@@ -386,3 +386,4 @@ E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\De
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\GetSurveyForm.cshtml.g.cs
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\LandingSurveyFormSubmition.cshtml.g.cs
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\SurveyResult\Index.cshtml.g.cs
+E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\SurveyResult\SurveyFormRepo.cshtml.g.cs

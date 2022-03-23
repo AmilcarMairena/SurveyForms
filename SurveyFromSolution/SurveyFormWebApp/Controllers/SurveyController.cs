@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SurveyFormWebApp.Extensions;
 using SurveyFormWebApp.Models;
@@ -36,17 +37,27 @@ namespace SurveyFormWebApp.Controllers
                 SurveyObj = new Models.Survey()
             };
 
-            if(id == null)
+            if (id == null)
             {
                 return View(surveyForm);
             }
 
-            surveyForm.SurveyObj = this.unit.survey.GetFirst(x => x.Id == Guid.Parse(id));
+            surveyForm.SurveyObj = this.unit.survey.GetFirst(x => x.Id == Guid.Parse(id), include:a=>a.Include(f=>f.FieldList));
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SD.IsUpdate)))
+            {
+                var getList = surveyForm.SurveyObj.FieldList.OrderBy(x=>x.DataType);
+                getList.ToList().ForEach(x => x.Survey = null);
+                HttpContext.Session.SetString(SD.IsUpdate, "True");
+                HttpContext.Session.SetObject(SD.FieldList, getList);
+            }
             return View(surveyForm);
         }
         [HttpGet]
         public IActionResult LinkToSurvey(string returnUrl)
         {
+            HttpContext.Session.Remove(SD.FieldList);
+            HttpContext.Session.Remove(SD.IsUpdate);
+            HttpContext.Session.Clear();
             ViewBag.url = returnUrl;
             return View();
         }
@@ -80,6 +91,16 @@ namespace SurveyFormWebApp.Controllers
             else
             {
                 //updating the form
+                this.unit.survey.Update(surveyForm.SurveyObj);
+
+                var oldFields = this.unit.Field.GetAll(x => x.SurveyId == surveyForm.SurveyObj.Id);
+
+                this.unit.Field.Remove(oldFields);
+
+                this.unit.Save();
+                var newFields = HttpContext.Session.GetObject<List<Field>>(SD.FieldList);
+                newFields.ForEach(x => x.SurveyId = surveyForm.SurveyObj.Id);
+                this.unit.Field.Add(newFields);
             }
 
             this.unit.Save();
@@ -164,6 +185,11 @@ namespace SurveyFormWebApp.Controllers
         [HttpGet]
         public IActionResult GetAllFieldInputs()
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString(SD.IsUpdate)))
+            {
+                var getData = HttpContext.Session.GetObject<List<Field>>(SD.FieldList);
+                return Json(new { data =getData});
+            }
 
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(SD.FieldList)))
             {

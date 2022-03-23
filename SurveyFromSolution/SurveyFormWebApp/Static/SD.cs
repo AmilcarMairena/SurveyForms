@@ -15,5 +15,7 @@ namespace SurveyFormWebApp.Static
 
         public static string FieldList = "FieldSession";
 
+        public static string IsUpdate = "IsUpdate";
+
     }
 }

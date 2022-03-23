@@ -1,0 +1,32 @@
+﻿@model SurveyFormWebApp.Models.Survey
+
+
+<div class="container my-2">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Formularios recibidos de @Model.Name</h3>
+            <p>@Model.SurveyDescription</p>
+            <hr />
+        </div>
+        <div class="col-lg-8 offset-lg-2">
+            @foreach (var item in Model.Results)
+	{
+            <div class="card my-2">
+                <div class="card-body">
+                    <p class="card-title">Recibo: @item.ResultDate</p>
+                    <ul>
+                        @foreach (var value in item.SurveyResults.ListValues)
+                        {
+                        <li>@value.Field.Title:   <span class="text-muted">@value.Value</span></li>
+                           
+                        }
+                    </ul>
+                       
+                    
+                </div>
+            </div>
+	}
+            
+        </div>
+    </div>
+</div>

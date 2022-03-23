@@ -15,5 +15,6 @@ namespace SurveyFormWebApp.Models
         public string Name { get; set; }
         public string SurveyDescription { get; set; }
         public IEnumerable<Field> FieldList { get; set; }
+        public IEnumerable<Result> Results { get; set; }
     }
 }

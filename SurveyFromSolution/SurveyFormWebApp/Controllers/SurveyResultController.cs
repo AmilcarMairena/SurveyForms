@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SurveyFormWebApp.Repository.IRepository;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,13 @@ namespace SurveyFormWebApp.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var result = this.unit.survey.GetAll(include: x => x.Include(a => a.Results)).ToList();
+            return View(result);
+        }
+        public IActionResult SurveyFormRepo(string id)
+        {
+            var result = this.unit.survey.GetFirst(x => x.Id == Guid.Parse(id), include: a => a.Include(r => r.Results).ThenInclude(sr => sr.SurveyResults).ThenInclude(lv => lv.ListValues).ThenInclude(f => f.Field));
+            return View(result);
         }
     }
 }

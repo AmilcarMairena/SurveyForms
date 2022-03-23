@@ -37,7 +37,11 @@ namespace SurveyFormWebApp.Controllers
             surveyObj = new SurveyResultViewModel()
             {
                 survey = this.unit.survey.GetFirst(x => x.Id == Guid.Parse(id),include:a=>a.Include(y=>y.FieldList))
+               
             };
+            var result = surveyObj.survey.FieldList.OrderBy(x => x.DataType);
+
+            surveyObj.survey.FieldList = result;
 
             return View(surveyObj);
         }
