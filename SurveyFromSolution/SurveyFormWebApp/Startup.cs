@@ -1,16 +1,21 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using SurveyFormWebApp.Data;
 using SurveyFormWebApp.Repository;
 using SurveyFormWebApp.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SurveyFormWebApp
@@ -32,12 +37,59 @@ namespace SurveyFormWebApp
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SurveyFormDb")));
 
 
+            //adding security to our porject
+
+            
+
+            services.AddAuthentication(op=> {
+                op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey=true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenSettings:Key"])),
+  
+                };
+            });
+
+            services.AddAuthentication("MyCookieAuth").AddCookie("MyCookieAuth", options =>
+            {
+                options.Cookie.Name = "MyCookieAuth";
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+            });
+
+
+            services.AddHttpClient("JWTAuthentication", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:44390/");
+            });
+            
+
+            //services.ConfigureApplicationCookie(opt =>
+            //{
+            //    opt.LoginPath = "/Account/Login";
+            //    opt.AccessDeniedPath = "/Account/AccessDenied";
+            //});
 
             //unit of work pattern
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+
             //setting up session on this project
+
+
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.LoginPath = "/Account/Login";
+                opt.AccessDeniedPath = "/Account/AccessDenied";
+            });
 
             services.AddSession(opt =>
             {
@@ -67,6 +119,18 @@ namespace SurveyFormWebApp
 
             app.UseRouting();
             app.UseSession();
+
+            app.Use(async (context, next) =>
+            {
+                var token = context.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+                }
+                await next();
+            });
+        
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

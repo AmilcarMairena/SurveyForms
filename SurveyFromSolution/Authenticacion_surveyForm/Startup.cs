@@ -1,4 +1,7 @@
-using Authenticacion_surveyForm.Data;
+
+using Authenticacion_surveyForm.Repository;
+using Authenticacion_surveyForm.Repository.IRepository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,9 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Authenticacion_surveyForm
@@ -28,8 +33,31 @@ namespace Authenticacion_surveyForm
         public void ConfigureServices(IServiceCollection services)
         {
             //Configurando nuestro contexto de datos pasando la cadena de conexion
-            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("identityDb")));
+
+
+            services.AddAuthentication(op => {
+                op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenSettings:Key"])),
+
+                };
+            });
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("AdminOnly", p => p.RequireClaim("Admin"));
+            });
+
             services.AddControllers();
+            services.AddTransient<ITokenService,TokenService>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +72,8 @@ namespace Authenticacion_surveyForm
 
             app.UseRouting();
 
+            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

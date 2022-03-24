@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Authenticacion_surveyForm.Controllers
 {
+    [Authorize(Policy = "AdminOnly")]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -24,6 +26,7 @@ namespace Authenticacion_surveyForm.Controllers
         }
 
         [HttpGet]
+       
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();

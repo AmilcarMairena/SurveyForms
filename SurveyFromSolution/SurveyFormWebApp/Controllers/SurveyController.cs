@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SurveyFormWebApp.Extensions;
 using SurveyFormWebApp.Models;
@@ -14,16 +16,32 @@ using System.Threading.Tasks;
 
 namespace SurveyFormWebApp.Controllers
 {
+    [Authorize]
     public class SurveyController : Controller
     {
         private readonly IUnitOfWork unit;
+        //private readonly ITokenService token;
+        private readonly IConfiguration config;
 
-        public SurveyController(IUnitOfWork unit)
+        public SurveyController(IUnitOfWork unit,IConfiguration config)
         {
             this.unit = unit;
+            this.config = config;
         }
         public IActionResult Index()
         {
+            //string token = HttpContext.Session.GetString("Token");
+
+            //if (token == null)
+            //{
+            //    return (RedirectToAction("Index","Home"));
+            //}
+
+            //if (!this.token.ValidateToken(config["TokenSettings:Key"].ToString(), token))
+            //{
+            //    return (RedirectToAction("Index","Home"));
+            //}
+
             return View();
         }
 

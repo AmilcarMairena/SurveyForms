@@ -280,7 +280,6 @@ E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\De
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Resources.Reader.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Resources.ResourceManager.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Resources.Writer.dll
-E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Runtime.CompilerServices.Unsafe.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Runtime.CompilerServices.VisualC.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Runtime.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Runtime.Extensions.dll
@@ -315,7 +314,6 @@ E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\De
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Text.Encoding.CodePages.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Text.Encoding.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Text.Encoding.Extensions.dll
-E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Text.Encodings.Web.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Text.RegularExpressions.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Threading.Channels.dll
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\refs\System.Threading.dll
@@ -387,3 +385,9 @@ E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\De
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\LandingSurveyFormSubmition.cshtml.g.cs
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\SurveyResult\Index.cshtml.g.cs
 E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\SurveyResult\SurveyFormRepo.cshtml.g.cs
+E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
+E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Account\AccessDenied.cshtml.g.cs
+E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\System.Net.Http.Json.dll
+E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+E:\Dev-Project suveryform\SurveyForms\SurveyFromSolution\SurveyFormWebApp\bin\Debug\netcoreapp3.1\System.Text.Encodings.Web.dll
