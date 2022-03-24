@@ -58,7 +58,7 @@ namespace SurveyFormWebApp.Controllers
 
                     HttpContext.Session.SetString("Token", token.AccessToken);
 
-                    return RedirectToAction("Index", "Survey");
+                    return LocalRedirect(returnUrl);
 
                 }
                 else
@@ -71,28 +71,7 @@ namespace SurveyFormWebApp.Controllers
               
                 
             }
-            //if(string.IsNullOrEmpty(userCredentials.email) || string.IsNullOrEmpty(userCredentials.Password))
-            //{
-            //    return BadRequest();
-            //}
-
-            //IActionResult respose = Unauthorized();
-
-            //var validUser = user.GetUser(userCredentials);
-            //if (validUser != null)
-            //{
-            //    generatedToken = token.BuildToken(confi["TokenSettings:key"].ToString(),validUser);  
-            //    if(generatedToken != null)
-            //    {
-            //        HttpContext.Session.SetString("Token", generatedToken);
-
-            //        return RedirectToAction("Index", "Survey");
-            //    }
-            //    else
-            //    {
-            //        return BadRequest();
-            //    }
-            //}
+         
             ModelState.AddModelError("Error", "Usuario incorrecto");
             return View(userCredentials);
         }

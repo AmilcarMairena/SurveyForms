@@ -39,20 +39,21 @@ namespace SurveyFormWebApp
 
             //adding security to our porject
 
-            
 
-            services.AddAuthentication(op=> {
+
+            services.AddAuthentication(op =>
+            {
                 op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(opt =>
             {
                 opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey=true,
+                    ValidateIssuerSigningKey = true,
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenSettings:Key"])),
-  
+
                 };
             });
 
