@@ -14,13 +14,13 @@ namespace SurveyFormWebApp.Data.DbInitializer
         {
             this.context = context;
         }
-        public async Task Initialize()
+        public void Initialize()
         {
             try
             {
                 if (context.Database.GetPendingMigrations().Count() > 0)
                 {
-                    await context.Database.MigrateAsync();
+                     context.Database.Migrate();
                 }
             }
             catch (Exception ex)

@@ -18,5 +18,9 @@ namespace SurveyFormWebApp.Data
         public DbSet<SurveyResult> SurveyResult { get; set; }
         public DbSet<Result> Result { get; set; }
         public DbSet<ValueResult> ValueResult { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

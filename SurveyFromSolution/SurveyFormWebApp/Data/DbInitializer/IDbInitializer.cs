@@ -7,6 +7,6 @@ namespace SurveyFormWebApp.Data.DbInitializer
 {
     public interface IDbInitializer
     {
-        Task Initialize();
+        void Initialize();
     }
 }
