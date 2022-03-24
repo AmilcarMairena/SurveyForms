@@ -104,7 +104,8 @@ namespace SurveyFormWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ResultId");
+                    b.HasIndex("ResultId")
+                        .IsUnique();
 
                     b.ToTable("SurveyResult");
                 });
@@ -149,7 +150,7 @@ namespace SurveyFormWebApp.Migrations
             modelBuilder.Entity("SurveyFormWebApp.Models.Result", b =>
                 {
                     b.HasOne("SurveyFormWebApp.Models.Survey", "Survey")
-                        .WithMany()
+                        .WithMany("Results")
                         .HasForeignKey("SurveyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -158,8 +159,8 @@ namespace SurveyFormWebApp.Migrations
             modelBuilder.Entity("SurveyFormWebApp.Models.SurveyResult", b =>
                 {
                     b.HasOne("SurveyFormWebApp.Models.Result", "Result")
-                        .WithMany()
-                        .HasForeignKey("ResultId")
+                        .WithOne("SurveyResults")
+                        .HasForeignKey("SurveyFormWebApp.Models.SurveyResult", "ResultId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

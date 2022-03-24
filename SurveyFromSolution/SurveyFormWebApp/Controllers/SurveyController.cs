@@ -86,7 +86,7 @@ namespace SurveyFormWebApp.Controllers
 
           
 
-            if (!ModelState.IsValid) return View(surveyForm);
+            if (!ModelState.IsValid) return View("Upsert",surveyForm);
             if(surveyForm.SurveyObj.Id == Guid.Empty)
             {
                 // creating the form

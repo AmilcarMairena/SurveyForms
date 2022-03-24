@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using SurveyFormWebApp.Data;
+using SurveyFormWebApp.Data.DbInitializer;
 using SurveyFormWebApp.Repository;
 using SurveyFormWebApp.Repository.IRepository;
 using System;
@@ -81,6 +82,7 @@ namespace SurveyFormWebApp
             //unit of work pattern
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IDbInitializer, DbInicialize>();
 
 
             //setting up session on this project
@@ -103,7 +105,7 @@ namespace SurveyFormWebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer db)
         {
             if (env.IsDevelopment())
             {
@@ -120,6 +122,8 @@ namespace SurveyFormWebApp
 
             app.UseRouting();
             app.UseSession();
+
+            db.Initialize();
 
             app.Use(async (context, next) =>
             {

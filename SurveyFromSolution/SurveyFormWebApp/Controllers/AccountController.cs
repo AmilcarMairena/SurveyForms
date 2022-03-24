@@ -48,7 +48,16 @@ namespace SurveyFormWebApp.Controllers
             {
                 var httpClient = httpClientFactory.CreateClient("JWTAuthentication");
                 var res = await httpClient.PostAsJsonAsync("/api/auth", userCredentials);
-                res.EnsureSuccessStatusCode();
+                try
+                {
+                    res.EnsureSuccessStatusCode();
+                }
+                catch 
+                {
+                    return RedirectToAction(nameof(AccessDenied));
+
+                }
+               
                 string strJwt = await res.Content.ReadAsStringAsync();
 
                 var token = JsonConvert.DeserializeObject<TokenDTO>(strJwt);

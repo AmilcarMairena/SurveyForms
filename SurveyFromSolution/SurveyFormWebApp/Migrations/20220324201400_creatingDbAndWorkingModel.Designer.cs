@@ -10,8 +10,8 @@ using SurveyFormWebApp.Data;
 namespace SurveyFormWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220323161358_changingSomeProperties")]
-    partial class changingSomeProperties
+    [Migration("20220324201400_creatingDbAndWorkingModel")]
+    partial class creatingDbAndWorkingModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,6 +57,9 @@ namespace SurveyFormWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("ResultDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("SurveyId")
                         .HasColumnType("uniqueidentifier");
 
@@ -95,10 +98,16 @@ namespace SurveyFormWebApp.Migrations
                     b.Property<string>("Desc")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ResultId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("SurveyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ResultId")
+                        .IsUnique();
 
                     b.ToTable("SurveyResult");
                 });
@@ -143,8 +152,17 @@ namespace SurveyFormWebApp.Migrations
             modelBuilder.Entity("SurveyFormWebApp.Models.Result", b =>
                 {
                     b.HasOne("SurveyFormWebApp.Models.Survey", "Survey")
-                        .WithMany()
+                        .WithMany("Results")
                         .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SurveyFormWebApp.Models.SurveyResult", b =>
+                {
+                    b.HasOne("SurveyFormWebApp.Models.Result", "Result")
+                        .WithOne("SurveyResults")
+                        .HasForeignKey("SurveyFormWebApp.Models.SurveyResult", "ResultId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

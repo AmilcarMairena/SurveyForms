@@ -56,10 +56,9 @@ function Delete(url) {
                 dataType: "json",
                 success: function (data) {
                     if (data.success) {
-                        toastr.success(data.message);
                         table.ajax.reload();
                     } else {
-                        toastr.error(data.message);
+                        alert("Error en el servidor")
                     }
                 }
             })
